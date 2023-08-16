@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3WebshopBackend.API", "H3WebshopBackend.API\H3WebshopBackend.API.csproj", "{6FF785AF-BB40-4274-A6A1-9EE193A6AFB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3WebshopBackend.Repository", "H3WebshopBackend.Repository\H3WebshopBackend.Repository.csproj", "{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FF785AF-BB40-4274-A6A1-9EE193A6AFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FF785AF-BB40-4274-A6A1-9EE193A6AFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FF785AF-BB40-4274-A6A1-9EE193A6AFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FF785AF-BB40-4274-A6A1-9EE193A6AFB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD7FF5D8-CE4B-4C49-A9E5-7F2B1AC8E594}
+	EndGlobalSection
+EndGlobal
