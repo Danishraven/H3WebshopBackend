@@ -1,0 +1,98 @@
+﻿@page "/items"
+@using H3WebshopBackend.Frontend.Services;
+@using H3WebshopBackend.Repository.Models;
+@inject FrontEndItemService itemService
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStore
+@inject ShoppingCartService shoppingCartService
+
+<div class="container">
+     <h1>@ErrorMessage</h1>
+    <div>
+        @if (items != null)
+        {
+            if (items.Count > 0)
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Item Name</th>
+                            <th>Item Description</th>
+                            <th>Price</th>
+                            <th>Supplier Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in items)
+                        {
+                            <tr>
+                                <td><button class="btn btn-primary" @onclick="()=>AddToCart(item)">Add to Cart</button></td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@item.Price</td>
+                                @if (item.Supplier != null)
+                                {
+                                    <td>@item.Supplier.Name</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <H3>No Items</H3>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    List<Item> items = new();
+    List<Item> shoppingCart = new();
+    string? ErrorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var itemArray = await itemService.GetAll();
+        if (itemArray == null) itemArray = Array.Empty<Item>();
+        try
+        {
+            items = new(itemArray.ToList());
+        }
+        catch (Exception e)
+        {
+            ErrorMessage = e.Message;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadStateAsync();
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadStateAsync()
+    {
+        var result = await ProtectedLocalStore.GetAsync<List<Item>>("ShoppingCart");
+        if (result.Success && result.Value != null)
+        {
+            shoppingCart = result.Value;
+        }
+        else
+        {
+            shoppingCart = new();
+        }
+        StateHasChanged();
+    }
+
+    public void AddToCart(Item item)
+    {
+        shoppingCartService.AddToCart(item);
+        StateHasChanged();
+    }
+}

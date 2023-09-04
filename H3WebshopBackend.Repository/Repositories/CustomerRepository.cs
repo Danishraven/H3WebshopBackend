@@ -7,55 +7,61 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace H3WebshopBackend.Repository.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        DatabaseContext context { get; set; }
-        public CustomerRepository(DatabaseContext context)
+        public DatabaseContext Context { get; set; }
+        public CustomerRepository(DatabaseContext Context)
         {
-            this.context = context;
+            this.Context = Context;
         }
         public async Task<int> CreateCustomer(Customer Customer)
         {
-            await context.Customer.AddAsync(Customer);
-            int changes = await context.SaveChangesAsync();
-            return changes;
+            await Context.Customer.AddAsync(Customer);
+            return await Context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteCustomer(int id)
+        public async Task<int> DeleteCustomer(Guid id)
         {
-            var customer = await context.Customer.FindAsync(id);
+            var customer = await Context.Customer.FindAsync(id);
             if(customer == null) return 0;
-            context.Customer.Remove(customer);
-            int changes = await context.SaveChangesAsync();
-            return changes;
+            Context.Customer.Remove(customer);
+            return await Context.SaveChangesAsync();
         }
 
         public async Task<Customer[]> GetAll()
         {
-            var customer = await context.Customer.ToArrayAsync();
-            return customer;
+            return await Context.Customer.ToArrayAsync();
         }
 
-        public async Task<Customer?> GetById(int id)
+        public async Task<Customer?> GetById(Guid id)
         {
-            var customer = await context.Customer.FindAsync(id);
-            return customer;
+            return await Context.Customer.FindAsync(id);
         }
 
         public async Task<Customer[]> GetByName(string name)
         {
-            var customer = await context.Customer.Where(customer => customer.Name == name).ToArrayAsync();
-            return customer;
+            return await Context.Customer.Where(customer => customer.Name == name).ToArrayAsync();
         }
 
         public async Task<int> UpdateCustomer(Customer Customer)
         {
-            context.Customer.Update(Customer);
-            int changes = await context.SaveChangesAsync();
-            return changes;
+            Context.Customer.Update(Customer);
+            return await Context.SaveChangesAsync();
+        }
+
+        public async Task<Customer[]> GetByCountry(string country)
+        {
+            return await Context.Customer.Where(customer => customer.Country == country).ToArrayAsync();
+        }
+
+        public async Task<Customer[]> GetByZipCode(string zipCode)
+        {
+            var customer = await Context.Customer.Where(customer => customer.ZipCode == zipCode).ToArrayAsync();
+            return customer;
         }
     }
 }

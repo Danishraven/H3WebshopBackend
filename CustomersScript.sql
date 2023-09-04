@@ -1,0 +1,22 @@
+INSERT INTO Customer(Id, Name, Email, PhoneNumber, Address, City, Zipcode, State, Country)
+VALUES
+('1656b3f2-5f5c-4630-8d52-0c676aa827ef', 'Imogen Fiennes', 'ifiennes0@bbb.org', '806-273-5958', '51655 Northridge Trail', 'Amarillo', '79105', 'Texas', 'United States'),
+('7a2c7e9c-4166-4230-8157-955eb569902c', 'Hillie Poulston', 'hpoulston1@posterous.com', '972-471-2541', '86173 Oxford Center', 'Lusacan', '4325', 'New York', 'Philippines'),
+('3b6da8e7-3feb-44d5-9084-ab1da2028bb2', 'Emmet Poundford', 'epoundford2@multiply.com', '876-184-9092', '01 Debs Point', 'Marinha', '2425-838', 'Leiria', 'Portugal'),
+('df6c454b-3246-4e5b-940f-229f9a997622', 'Bathsheba Ganforth', 'bganforth3@nytimes.com', '413-239-7753', '203 Mayfield Plaza', 'Hongcheng', '12345', 'California', 'China'),
+('95e65581-6c9a-4e8c-806d-f9230118125c', 'Maighdiln Kubalek', 'mkubalek4@istockphoto.com', '551-914-0658', '9777 Thackeray Terrace', 'Luofang', '23456', 'Texas', 'China'),
+('246c9ff1-e958-444a-9c7e-c13ef8247a1a', 'Lena Arrol', 'larrol5@furl.net', '800-496-1552', '4 Oak Valley Place', 'Midland', 'L4R', 'Ontario', 'Canada'),
+('7ced7999-52bb-4a54-b2ce-1d7a583f26d1', 'Viole Eastcott', 'veastcott6@salon.com', '858-147-0315', '84 Susan Plaza', 'Kostyantynivka', '43210', 'Florida', 'Ukraine'),
+('f1848a07-8227-4bbd-ac6d-be45b0c6491c', 'Dianemarie Monksfield', 'dmonksfield7@istockphoto.com', '968-403-3647', '6 Fallview Hill', 'Jiantang', '54321', 'Illinois', 'China'),
+('180859f5-bb76-4158-97ed-a234f09e7312', 'Lu Boote', 'lboote8@livejournal.com', '514-270-0322', '3 Brickson Park Junction', 'Belize City', '87654', 'Texas', 'Belize'),
+('8e11f62b-75b5-4dab-9d1b-a6740497f811', 'Brynne Vigneron', 'bvigneron9@state.tx.us', '353-261-7927', '295 Scofield Circle', 'Dainan', '76543', 'California', 'China'),
+('65df140e-038a-41f6-a364-9f5fa63d8b92', 'Betty Knight', 'bknighta@stumbleupon.com', '343-815-2382', '9093 Autumn Leaf Hill', 'Tsybli', '34567', 'Texas', 'Ukraine'),
+('0116cae4-b9a1-4ae8-8720-8b92d9697552', 'Rivi Teresse', 'rteresseb@mozilla.com', '804-383-8450', '505 Russell Plaza', 'Gävle', '78901', 'New York', 'Sweden'),
+('4f93945a-4ac2-4fc9-9ca0-38cfb26e2b02', 'Claresta Verbrugge', 'cverbruggec@mtv.com', '741-151-9899', '4973 Shelley Crossing', 'Mastaiciai', '60028', 'California', 'Lithuania'),
+('04dcfd38-1752-4495-a75c-73bdbed314cf', 'Regine Ondricek', 'rondricekd@cpanel.net', '551-799-7719', '30 Tony Center', 'San José de Barlovento', '12345', 'Florida', 'Venezuela'),
+('9a699439-930a-4525-b062-23c5c5cc8393', 'Cathyleen Martellini', 'cmartellinie@hostgator.com', '111-904-1004', '5 Del Sol Crossing', 'Shal’skiy', '186167', 'Illinois', 'Russia'),
+('84ef3939-ad8a-43ad-b91c-e7caba43f679', 'Doralia Ogers', 'dogersf@ask.com', '979-581-0898', '2934 Dwight Parkway', 'Cipolletti', '8324', 'California', 'Argentina'),
+('0df1a19e-944c-4cf6-b28c-9b8f56f42fb9', 'Alick Hamlin', 'ahamling@barnesandnoble.com', '266-622-1527', '33 Oak Trail', 'Carcavelos', '2775-398', 'New York', 'Portugal'),
+('9ae22d93-4337-4a11-bc5c-2de223ca061d', 'Constantia Corrin', 'ccorrinh@so-net.ne.jp', '638-465-7423', '1391 Northwestern Parkway', 'Sukawening', '98765', 'Texas', 'Indonesia'),
+('c984cb44-0b76-406d-8adc-cd2492947605', 'Dynah Swayland', 'dswaylandi@wired.com', '121-595-8119', '1631 Novick Plaza', 'Chenggang', '54321', 'California', 'China'),
+('d98c23f2-f40f-424d-99aa-226fdd804143', 'Luise Gilbey', 'lgilbeyj@cdbaby.com', '385-959-5133', '278 Debra Pass', 'Matsumoto', '996-0051', 'New York', 'Japan');

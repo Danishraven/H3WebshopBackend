@@ -10,7 +10,7 @@ namespace H3WebshopBackend.Repository.Models
     public class Customer
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string? Name { get; set; }
         [Required]
@@ -22,6 +22,7 @@ namespace H3WebshopBackend.Repository.Models
         public string? City { get; set; }
         [Required]
         public string? ZipCode { get; set;}
+        [Required]
         public string? State { get; set; }
         [Required]
         public string? Country { get; set; }

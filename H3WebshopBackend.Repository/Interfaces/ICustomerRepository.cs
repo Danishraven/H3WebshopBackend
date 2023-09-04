@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace H3WebshopBackend.Repository.Interfaces
 {
-    internal interface ICustomerRepository
+    public interface ICustomerRepository
     {
         public Task<Customer[]> GetAll();
-        public Task<Customer?> GetById(int id);
+        public Task<Customer?> GetById(Guid id);
         public Task<Customer[]> GetByName(string name);
+        public Task<Customer[]> GetByCountry(string country);
+        public Task<Customer[]> GetByZipCode(string zipCode);
         public Task<int> CreateCustomer(Customer Customer);
         public Task<int> UpdateCustomer(Customer Customer);
-        public Task<int> DeleteCustomer(int id);
+        public Task<int> DeleteCustomer(Guid id);
     }
 }

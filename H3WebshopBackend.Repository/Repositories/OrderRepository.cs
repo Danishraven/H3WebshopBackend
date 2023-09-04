@@ -10,45 +10,57 @@ using System.Threading.Tasks;
 
 namespace H3WebshopBackend.Repository.Repositories
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepositoryTargeted
     {
-        DatabaseContext context { get; set; }
-        public OrderRepository(DatabaseContext context)
+        public DatabaseContext Context { get; set; }
+        public OrderRepository(DatabaseContext Context)
         {
-            this.context = context;
+            this.Context = Context;
         }
-        public async Task<int> CreateOrder(Order Order)
+        public async Task<int> CreateOrder(Order order)
         {
-            await context.Order.AddAsync(Order);
-            int changes = await context.SaveChangesAsync();
+            if (order.Item == null || order.Customer == null || order == null)
+            {
+                return 0;
+            }
+            ItemRepository itemRepository = new(Context);
+            var item = await itemRepository.GetById(order.Item.Id);
+            CustomerRepository customerRepository = new(Context);
+            var customer = await customerRepository.GetById(order.Customer.Id);
+            if (customer != null && item != null)
+            {
+                order.Customer = customer;
+                order.Item = item;
+            }
+            await Context.Order.AddAsync(order);
+            int changes = await Context.SaveChangesAsync();
             return changes;
         }
 
-        public async Task<int> DeleteOrder(int id)
+        public async Task<int> DeleteOrder(Guid id)
         {
-            var Order = await context.Order.FindAsync(id);
+            var Order = await Context.Order.FindAsync(id);
             if(Order == null) return 0;
-            context.Order.Remove(Order);
-            int changes = await context.SaveChangesAsync();
+            Context.Order.Remove(Order);
+            int changes = await Context.SaveChangesAsync();
             return changes;
         }
 
         public async Task<Order[]> GetAll()
         {
-            var Order = await context.Order.ToArrayAsync();
-            return Order;
+            return await Context.Order.Include(p => p.Item).Include(p => p.Customer).Include(p => p.Item.Supplier).ToArrayAsync();
         }
 
-        public async Task<Order?> GetById(int id)
+        public async Task<Order?> GetById(Guid id)
         {
-            var Order = await context.Order.FindAsync(id);
+            var Order = await Context.Order.Include(p => p.Item).Include(p => p.Customer).Include(p => p.Item.Supplier).FirstOrDefaultAsync(p => p.Id == id);
             return Order;
         }
 
         public async Task<int> UpdateOrder(Order Order)
         {
-            context.Order.Update(Order);
-            int changes = await context.SaveChangesAsync();
+            Context.Order.Update(Order);
+            int changes = await Context.SaveChangesAsync();
             return changes;
         }
     }

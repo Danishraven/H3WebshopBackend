@@ -1,0 +1,54 @@
+﻿@page "/suppliers"
+@using H3WebshopBackend.Frontend.Services;
+@using H3WebshopBackend.Repository.Models;
+@inject FrontEndSupplierService supplierService
+
+<div class="container">
+     <h1>@ErrorMessage</h1>
+        @if (suppliers != null)
+            {
+            if (suppliers.Count > 0)
+                {
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Supplier Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var supplier in suppliers)
+                        {
+                            <tr>
+                                <td>@supplier.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div>
+                    <H3>No Items</H3>
+                </div>
+            }
+        }
+</div>
+
+@code {
+    List<Supplier> suppliers = new();
+    string? ErrorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var supplierArray = await supplierService.GetAll();
+        if (supplierArray == null) supplierArray = Array.Empty<Supplier>();
+        try
+        {
+            suppliers = new(supplierArray.ToList());
+        }
+        catch (Exception e)
+        {
+            ErrorMessage = e.Message;
+        }
+    }
+}

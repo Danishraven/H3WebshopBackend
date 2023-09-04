@@ -1,0 +1,68 @@
+﻿@page "/customers"
+@using H3WebshopBackend.API.Controllers;
+@using H3WebshopBackend.API.Interfaces;
+@using H3WebshopBackend.Frontend.Services;
+@using H3WebshopBackend.Repository.Models;
+@inject FrontEndCustomerService customerService
+
+<div class="container">
+    <div class="body">
+        <h1>@ErrorMessage</h1>
+        @if (customers != null)
+        {
+            if (customers.Count > 0)
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Address</th>
+                            <th>Zipcode</th>
+                            <th>State</th>
+                            <th>Country</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var customer in customers)
+                        {
+                            <tr>
+                                <td>@customer.Name</td>
+                                <td>@customer.Email</td>
+                                <td>@customer.PhoneNumber</td>
+                                <td>@customer.Address</td>
+                                <td>@customer.ZipCode</td>
+                                <td>@customer.State</td>
+                                <td>@customer.Country</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div>
+                    <H3>No Customers</H3>
+                </div>
+            }
+        }
+    </div>
+</div>
+@code {
+    public List<Customer>? customers;
+    public string? ErrorMessage;
+    protected override async Task OnInitializedAsync()
+    {
+        var customersArray = await customerService.GetAll();
+        if (customersArray == null) customersArray = Array.Empty<Customer>();
+        try
+        {
+            customers = new(customersArray.ToList());
+        }
+        catch (Exception e)
+        {
+            ErrorMessage = e.Message;
+        }
+    }
+}

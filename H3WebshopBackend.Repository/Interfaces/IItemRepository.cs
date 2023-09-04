@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace H3WebshopBackend.Repository.Interfaces
 {
-    internal interface IItemRepository
+    public interface IItemRepository
     {
         public Task<Item[]> GetAll();
-        public Task<Item?> GetById(int id);
-        public Task<Item[]> GetByName(string name);
+        public Task<Item?> GetById(Guid id);
         public Task<int> CreateItem(Item item);
         public Task<int> UpdateItem(Item item);
-        public Task<int> DeleteItem(int id);
+        public Task<int> DeleteItem(Guid id);
     }
 }

@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3WebshopBackend.API", "H3WebshopBackend.API\H3WebshopBackend.API.csproj", "{6FF785AF-BB40-4274-A6A1-9EE193A6AFB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H3WebshopBackend.API", "H3WebshopBackend.API\H3WebshopBackend.API.csproj", "{6FF785AF-BB40-4274-A6A1-9EE193A6AFB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3WebshopBackend.Repository", "H3WebshopBackend.Repository\H3WebshopBackend.Repository.csproj", "{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H3WebshopBackend.Repository", "H3WebshopBackend.Repository\H3WebshopBackend.Repository.csproj", "{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H3WebshopBackend.Services", "H3WebshopBackend.Services\H3WebshopBackend.Services.csproj", "{8C0B1532-4FCD-4122-9DBE-0C785DABD47D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H3WebshopBackend.Frontend", "H3WebshopBackend.Frontend\H3WebshopBackend.Frontend.csproj", "{A2AEEE17-39E9-4829-8E72-0F4FE8FE86DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4D280F3-7CBC-44A4-B52F-698F0F48DF8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C0B1532-4FCD-4122-9DBE-0C785DABD47D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C0B1532-4FCD-4122-9DBE-0C785DABD47D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C0B1532-4FCD-4122-9DBE-0C785DABD47D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C0B1532-4FCD-4122-9DBE-0C785DABD47D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2AEEE17-39E9-4829-8E72-0F4FE8FE86DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2AEEE17-39E9-4829-8E72-0F4FE8FE86DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2AEEE17-39E9-4829-8E72-0F4FE8FE86DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2AEEE17-39E9-4829-8E72-0F4FE8FE86DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

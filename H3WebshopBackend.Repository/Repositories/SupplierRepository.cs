@@ -12,50 +12,39 @@ namespace H3WebshopBackend.Repository.Repositories
 {
     public class SupplierRepository : ISupplierRepository
     {
-        DatabaseContext context { get; set; }
-        public SupplierRepository(DatabaseContext context)
+        public DatabaseContext Context { get; set; }
+        public SupplierRepository(DatabaseContext Context)
         {
-            this.context = context;
+            this.Context = Context;
         }
-        public async Task<int> CreateSupplier(Supplier Supplier)
+        public async Task<int> CreateSupplier(Supplier supplier)
         {
-            await context.Supplier.AddAsync(Supplier);
-            int changes = await context.SaveChangesAsync();
-            return changes;
+            await Context.Supplier.AddAsync(supplier);
+            return await Context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteSupplier(int id)
+        public async Task<int> DeleteSupplier(Guid id)
         {
-            var Supplier = await context.Supplier.FindAsync(id);
+            var Supplier = await Context.Supplier.FindAsync(id);
             if(Supplier == null) return 0;
-            context.Supplier.Remove(Supplier);
-            int changes = await context.SaveChangesAsync();
-            return changes;
+            Context.Supplier.Remove(Supplier);  
+            return await Context.SaveChangesAsync();
         }
 
         public async Task<Supplier[]> GetAll()
         {
-            var Supplier = await context.Supplier.ToArrayAsync();
-            return Supplier;
+            return await Context.Supplier.ToArrayAsync();
         }
 
-        public async Task<Supplier?> GetById(int id)
+        public async Task<Supplier?> GetById(Guid id)
         {
-            var Supplier = await context.Supplier.FindAsync(id);
-            return Supplier;
+            return await Context.Supplier.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<Supplier[]> GetByName(string name)
+        public async Task<int> UpdateSupplier(Supplier supplier)
         {
-            var Supplier = await context.Supplier.Where(Supplier => Supplier.Name == name).ToArrayAsync();
-            return Supplier;
-        }
-
-        public async Task<int> UpdateSupplier(Supplier Supplier)
-        {
-            context.Supplier.Update(Supplier);
-            int changes = await context.SaveChangesAsync();
-            return changes;
+            Context.Supplier.Update(supplier);
+            return await Context.SaveChangesAsync();
         }
     }
 }

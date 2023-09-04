@@ -10,10 +10,12 @@ namespace H3WebshopBackend.Repository.Models
     public class Order
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public Item? Item { get; set; }
         [Required]
         public Customer? Customer { get; set; }
+        [Required]
+        public DateTime? DateTime { get; set; }
     }
 }
