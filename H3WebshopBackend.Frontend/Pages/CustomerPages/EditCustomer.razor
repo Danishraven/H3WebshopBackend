@@ -61,6 +61,7 @@
     {
         try
         {
+            ArgumentNullException.ThrowIfNull(id);
             Guid guid = new(id);
             Customer? returnCustomer = await customerService.GetById(guid);
             if (returnCustomer != null)
