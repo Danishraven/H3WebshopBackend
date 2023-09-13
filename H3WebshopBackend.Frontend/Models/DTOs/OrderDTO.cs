@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace H3WebshopBackend.Repository.Models.DTOs
+namespace H3WebshopBackend.Frontend.Models.DTOs
 {
     public class OrderDTO
     {
@@ -17,15 +17,5 @@ namespace H3WebshopBackend.Repository.Models.DTOs
         public Customer? Customer { get; set; }
         [Required]
         public DateTime? DateTime { get; set; }
-        [Required]
-        public string? Address { get; set; }
-        [Required]
-        public string? City { get; set; }
-        [Required]
-        public string? ZipCode { get; set; }
-        [Required]
-        public string? State { get; set; }
-        [Required]
-        public string? Country { get; set; }
     }
 }

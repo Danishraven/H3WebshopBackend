@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H3WebshopBackend.Repository.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230902001051_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20230911203615_Simplify Password")]
+    partial class SimplifyPassword
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,8 +50,15 @@ namespace H3WebshopBackend.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Privileged")
+                        .HasColumnType("bit");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -79,6 +86,9 @@ namespace H3WebshopBackend.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
                     b.Property<Guid>("SupplierId")
                         .HasColumnType("uniqueidentifier");
 
@@ -95,11 +105,35 @@ namespace H3WebshopBackend.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("DateTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -128,7 +162,7 @@ namespace H3WebshopBackend.Repository.Migrations
             modelBuilder.Entity("H3WebshopBackend.Repository.Models.Item", b =>
                 {
                     b.HasOne("H3WebshopBackend.Repository.Models.Supplier", "Supplier")
-                        .WithMany("Items")
+                        .WithMany()
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -153,11 +187,6 @@ namespace H3WebshopBackend.Repository.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Item");
-                });
-
-            modelBuilder.Entity("H3WebshopBackend.Repository.Models.Supplier", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

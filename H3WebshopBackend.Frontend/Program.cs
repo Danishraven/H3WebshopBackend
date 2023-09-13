@@ -12,24 +12,25 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DatabaseContext>(option =>
-option.UseSqlServer(builder.Configuration.GetConnectionString("connection")));
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+builder.Services.AddDbContext<DatabaseContext>(option =>
+option.UseSqlServer(builder.Configuration.GetConnectionString("connection")));
+
 builder.Services.AddScoped<FrontEndCustomerService>();
 builder.Services.AddScoped<FrontEndItemService>();
 builder.Services.AddScoped<FrontEndOrderService>();
 builder.Services.AddScoped<FrontEndSupplierService>();
-builder.Services.AddScoped<ShoppingCartService>();
 
 ////////////////////////////////////////////////////////////////
 
 builder.Services.AddScoped<ICustomerController,  CustomerController>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
 
 builder.Services.AddScoped<IItemController, ItemController>();
 builder.Services.AddScoped<IItemService, ItemService>();

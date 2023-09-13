@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace H3WebshopBackend.Repository.Models
+namespace H3WebshopBackend.Frontend.Models
 {
     public class Item
     {

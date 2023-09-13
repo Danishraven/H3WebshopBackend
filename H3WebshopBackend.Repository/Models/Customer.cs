@@ -1,4 +1,5 @@
-﻿using System;
+﻿using H3WebshopBackend.Repository.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace H3WebshopBackend.Repository.Models
 {
-    public class Customer
+    public class Customer : IAddress
     {
         [Key]
         public Guid Id { get; set; }
+        [Required]
+        public string Password { get; set; } = string.Empty;
         [Required]
         public string? Name { get; set; }
         [Required]

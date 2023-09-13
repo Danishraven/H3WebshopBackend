@@ -58,5 +58,10 @@ namespace H3WebshopBackend.Services.Services
         {
             return await CustomerRepository.GetByZipCode(zipCode);
         }
+
+        public async Task<Customer[]> GetByEmail(string email)
+        {
+            return await CustomerRepository.GetByEmail(email);
+        }
     }
 }

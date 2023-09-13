@@ -4,6 +4,8 @@
 @using H3WebshopBackend.Frontend.Services;
 @using H3WebshopBackend.Repository.Models;
 @inject FrontEndCustomerService customerService
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStore
 
 <div class="container">
     <div class="body">
@@ -22,6 +24,8 @@
                             <th>Zipcode</th>
                             <th>State</th>
                             <th>Country</th>
+                            <th>Password</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +39,9 @@
                                 <td>@customer.ZipCode</td>
                                 <td>@customer.State</td>
                                 <td>@customer.Country</td>
+                                <td>@customer.Password</td>
+                                <td><a class="btn btn-link" href="customers/edit/@customer.Id">Edit @customer.Name</a></td>
+                                <td><button @onclick="() => DeleteUser(customer.Id)">Delete</button></td>
                             </tr>
                         }
                     </tbody>
@@ -51,6 +58,7 @@
 </div>
 @code {
     public List<Customer>? customers;
+    public Customer? user = new();
     public string? ErrorMessage;
     protected override async Task OnInitializedAsync()
     {
@@ -64,5 +72,19 @@
         {
             ErrorMessage = e.Message;
         }
+    }
+
+    private async Task LoadStateAsync()
+    {
+        var customerResult = await ProtectedLocalStore.GetAsync<Customer>("User");
+        if (customerResult.Success && customerResult.Value != null)
+        {
+            user = customerResult.Value;
+        }
+    }
+    async void DeleteUser(Guid id)
+    {
+        await customerService.DeleteCustomer(id);
+        StateHasChanged();
     }
 }

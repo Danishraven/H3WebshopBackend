@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace H3WebshopBackend.Repository.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230902121317_ItemPrice")]
-    partial class ItemPrice
+    [Migration("20230907022401_Initial Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,8 +50,25 @@ namespace H3WebshopBackend.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PasswordIterations")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PasswordKeySize")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Privileged")
+                        .HasColumnType("bit");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -79,8 +96,7 @@ namespace H3WebshopBackend.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Price")
-                        .IsRequired()
+                    b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<Guid>("SupplierId")
@@ -99,11 +115,35 @@ namespace H3WebshopBackend.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("DateTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -132,7 +172,7 @@ namespace H3WebshopBackend.Repository.Migrations
             modelBuilder.Entity("H3WebshopBackend.Repository.Models.Item", b =>
                 {
                     b.HasOne("H3WebshopBackend.Repository.Models.Supplier", "Supplier")
-                        .WithMany("Items")
+                        .WithMany()
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -157,11 +197,6 @@ namespace H3WebshopBackend.Repository.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Item");
-                });
-
-            modelBuilder.Entity("H3WebshopBackend.Repository.Models.Supplier", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

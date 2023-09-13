@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -14,9 +15,9 @@ namespace H3WebshopBackend.Repository.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         public DatabaseContext Context { get; set; }
-        public CustomerRepository(DatabaseContext Context)
+        public CustomerRepository(DatabaseContext context)
         {
-            this.Context = Context;
+            this.Context = context;
         }
         public async Task<int> CreateCustomer(Customer Customer)
         {
@@ -34,7 +35,17 @@ namespace H3WebshopBackend.Repository.Repositories
 
         public async Task<Customer[]> GetAll()
         {
-            return await Context.Customer.ToArrayAsync();
+            try
+            {
+                var customers = Context.Customer.ToArray();
+                return customers;
+
+            }
+            catch (Exception e)
+            {
+                var error = e;
+                throw;
+            }
         }
 
         public async Task<Customer?> GetById(Guid id)
@@ -60,8 +71,23 @@ namespace H3WebshopBackend.Repository.Repositories
 
         public async Task<Customer[]> GetByZipCode(string zipCode)
         {
-            var customer = await Context.Customer.Where(customer => customer.ZipCode == zipCode).ToArrayAsync();
-            return customer;
+            return await Context.Customer.Where(customer => customer.ZipCode == zipCode).ToArrayAsync();
+        }
+
+        public async Task<Customer[]> GetByEmail(string email)
+        {
+            return Context.Customer.Where(customer => customer.Email == email).ToArray();
+            try
+            {
+            }
+            catch (Exception e)
+            {
+                var error = e.Message;
+                Console.WriteLine(error);
+                List<Customer> customerList = new();
+                Customer[] customers = customerList.ToArray();
+                return customers;
+            }
         }
     }
 }

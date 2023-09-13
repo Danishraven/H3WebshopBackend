@@ -1,16 +1,20 @@
-﻿@page "/customers/add"
+﻿@page "/customers/edit/{id}"
 @using H3WebshopBackend.Frontend.Services;
 @using H3WebshopBackend.Repository.Models;
 @inject FrontEndCustomerService customerService
 @inject NavigationManager navigationManager
 
 <div class="container">
-    <h3>AddCustomer</h3>
+    <h3>EditCustomer</h3>
     <div class="body">
-        <EditForm Model=@customer OnValidSubmit=@Submit>
+        <EditForm Model=@customer OnValidSubmit=@SaveChanges>
             <div class="form-group">
                 <label for="Name">Name</label>
                 <InputText @bind-Value=customer.Name class="form-control" id="Name" />
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <InputText @bind-Value=customer.Password class="form-control" id="Password" />
             </div>
             <div class="form-group">
                 <label for="Email">Email</label>
@@ -40,19 +44,46 @@
                 <label for="Country">Country</label>
                 <InputText @bind-Value=customer.Country class="form-control" id="Country" />
             </div>
-            <input type="submit" class="btn btn-primary" value="save"/>
+            <input type="submit" class="btn btn-primary" value="save" />
+            <input type="button" class="btn btn-danger" value="delete" @onclick=@Delete/>
         </EditForm>
     </div>
 </div>
 
 @code {
-    Customer customer = new();
 
-    public async Task<int> Submit()
+    [Parameter]
+    public string? id { get; set; }
+    Customer customer = new();
+    string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
     {
-        customer.Id = Guid.Empty;
-        int linesChanged = await customerService.CreateCustomer(customer);
+        try
+        {
+            Guid guid = new(id);
+            Customer? returnCustomer = await customerService.GetById(guid);
+            if (returnCustomer != null)
+            {
+                customer = returnCustomer;
+            }
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+    }
+
+    public async Task<int> SaveChanges()
+    {
+        var returnValue = await customerService.UpdateCustomer(customer);
         navigationManager.NavigateTo("/customers");
-        return linesChanged;
+        return returnValue;
+    }
+    public async Task<int> Delete()
+    {
+        var returnValue = await customerService.DeleteCustomer(customer.Id);
+        navigationManager.NavigateTo("/customers");
+        return returnValue;
     }
 }

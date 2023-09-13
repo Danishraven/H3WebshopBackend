@@ -17,5 +17,6 @@ namespace H3WebshopBackend.Repository.Interfaces
         public Task<int> CreateCustomer(Customer Customer);
         public Task<int> UpdateCustomer(Customer Customer);
         public Task<int> DeleteCustomer(Guid id);
+        public Task<Customer[]> GetByEmail(string email);
     }
 }

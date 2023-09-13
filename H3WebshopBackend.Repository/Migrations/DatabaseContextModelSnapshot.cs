@@ -48,6 +48,10 @@ namespace H3WebshopBackend.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -77,8 +81,7 @@ namespace H3WebshopBackend.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Price")
-                        .IsRequired()
+                    b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<Guid>("SupplierId")
@@ -97,6 +100,18 @@ namespace H3WebshopBackend.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -106,6 +121,14 @@ namespace H3WebshopBackend.Repository.Migrations
 
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -134,7 +157,7 @@ namespace H3WebshopBackend.Repository.Migrations
             modelBuilder.Entity("H3WebshopBackend.Repository.Models.Item", b =>
                 {
                     b.HasOne("H3WebshopBackend.Repository.Models.Supplier", "Supplier")
-                        .WithMany("Items")
+                        .WithMany()
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -159,11 +182,6 @@ namespace H3WebshopBackend.Repository.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Item");
-                });
-
-            modelBuilder.Entity("H3WebshopBackend.Repository.Models.Supplier", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

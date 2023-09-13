@@ -27,6 +27,11 @@ namespace H3WebshopBackend.Services.Services
                 order.Id = orderDTO.Id;
                 order.Customer = orderDTO.Customer;
                 order.DateTime = orderDTO.DateTime;
+                order.Address = orderDTO.Address;
+                order.City = orderDTO.City;
+                order.ZipCode = orderDTO.ZipCode;
+                order.State = orderDTO.State;
+                order.Country = orderDTO.Country;
                 linesChanged += await OrderRepository.CreateOrder(order);
             }
             return linesChanged;

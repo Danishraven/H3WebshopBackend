@@ -1,0 +1,174 @@
+﻿@page "/"
+@using H3WebshopBackend.Frontend.Services;
+@using H3WebshopBackend.Repository.Models;
+@inject FrontEndItemService itemService
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="top-row">
+    <button title="Cart menu" class="cart-toggler" @onclick="ToggleCart">Cart</button>
+</div>
+<div class="container">
+    @if (loading)
+    {
+        <div class="@NavMenuCssClass cart-container" style="z-index: 10; position: absolute">
+            <a class="btn btn-primary" href="/cart">Finish Order</a>
+            <div>Price: $@totalPrice.ToString("0.00") USD</div>
+            <table>
+                <tbody>
+                @foreach (var item in shoppingCart)
+                {
+                    int idValue = shoppingCart.IndexOf(item);
+                    <tr class="cart-line">
+                        <td class="cart-item-name">@item.Name</td>
+                        <td><input type="checkbox" id="@idValue" @onchange="()=>DeleteFromCart(item)" /><label for="@idValue" class="oi oi-circle-x"></label></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+         <h1>@ErrorMessage</h1>
+        <div style="position: absolute">
+        @if (items != null)
+        {
+            if (items.Count > 0)
+            {
+                <div class="flex-container">
+                    @foreach (var item in items)
+                    {
+                        <div class="card">
+                            <div class="card__container">
+                                <h4 class="card__item-name">
+                                    @item.Name
+                                </h4>
+                                <p class="card__item-description">
+                                    @item.Description
+                                </p>
+                                <p class="card__item-supplier">
+                                    @item.Supplier.Name
+                                </p>
+                                <p class="card__item-price">
+                                    @item.Price
+                                </p>
+                                <button class="btn btn-primary card__buy-button" @onclick="()=>AddToCart(item)">Add to Cart</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @*<table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Item Name</th>
+                            <th>Item Description</th>
+                            <th>Price</th>
+                            <th>Supplier Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in items)
+                        {
+                            <tr>
+                                <td><button class="btn btn-primary" @onclick="()=>AddToCart(item)">Add to Cart</button></td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@item.Price</td>
+                                @if (item.Supplier != null)
+                                {
+                                    <td>@item.Supplier.Name</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>*@
+            }
+            else
+            {
+                <H3>No Items</H3>
+            }
+        }
+    </div>
+    }
+</div>
+
+@code {
+    List<Item> items = new();
+    List<Item> shoppingCart = new();
+    string? ErrorMessage;
+    private bool collapseCart = true;
+    private string? NavMenuCssClass => collapseCart ? "collapse" : null;
+    double totalPrice;
+    bool loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var itemArray = await itemService.GetAll();
+        if (itemArray == null) itemArray = Array.Empty<Item>();
+        try
+        {
+            items = new(itemArray.ToList());
+        }
+        catch (Exception e)
+        {
+            ErrorMessage = e.Message;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadStateAsync();
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadStateAsync()
+    {
+        var result = await ProtectedLocalStore.GetAsync<List<Item>>("ShoppingCart");
+        if (result.Success && result.Value != null)
+        {
+            shoppingCart = result.Value;
+        }
+        else
+        {
+            shoppingCart = new();
+        }
+        PriceCalculator();
+        loading = true;
+        StateHasChanged();
+
+    }
+
+    public async void AddToCart(Item item)
+    {
+        shoppingCart.Add(item);
+        await ProtectedLocalStore.SetAsync("ShoppingCart", shoppingCart);
+        PriceCalculator();
+        StateHasChanged();
+    }
+
+    public async void DeleteFromCart(Item item)
+    {
+        shoppingCart.Remove(item);
+        await ProtectedLocalStore.SetAsync("ShoppingCart", shoppingCart);
+        PriceCalculator();
+        StateHasChanged();
+    }
+
+    public void ToggleCart()
+    {
+        collapseCart = !collapseCart;
+    }
+
+    public void PriceCalculator()
+    {
+        totalPrice = 0;
+        foreach (var i in shoppingCart)
+        {
+            totalPrice += i.Price;
+        }
+        StateHasChanged();
+    }
+}

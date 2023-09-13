@@ -1,0 +1,78 @@
+﻿@page "/Login"
+@using System.Security.Cryptography;
+@using H3WebshopBackend.Frontend.Services;
+@using H3WebshopBackend.Repository.Models;
+@using System.Text.Json;
+@inject FrontEndCustomerService customerService
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+<div class="container">
+    <h3>Login</h3>
+    <div class="body">
+        <form onsubmit="userlogin">
+            @if (!working)
+            {
+                if (!successfulLogin)
+                {
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input @bind="_email" class="form-control" id="Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Password</label>
+                        <input type="password" @bind="_password" class="form-control" id="Password" />
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Login" @onclick="() => UserLogin(_email, _password)" />
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="customers/add">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Create New User
+                        </NavLink>
+                    </div>
+                }
+                else
+                {
+                    <p>Login Sucessful</p>
+                }
+                <p>@successfulLogin</p>
+            }
+        </form>
+    </div>
+</div>
+
+@code {
+    Customer customer = new();
+    string? _email;
+    string? _password;
+    bool successfulLogin;
+    bool working;
+    Customer[] customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ProtectedLocalStore.SetAsync("User", null);
+        customers = await customerService.GetAll();
+    }
+
+    async void UserLogin(string email, string password)
+    {
+        working = true;
+        StateHasChanged();
+        if (password == null) password = string.Empty;
+        //var customers = await customerService.GetByEmail(email);
+        foreach (var c in customers)
+        {
+            if (c.Password == password && c.Email == email)
+            {
+                customer = c;
+                
+                await ProtectedLocalStore.SetAsync("User", "test");
+                successfulLogin = true;
+                break;
+            }
+        }
+        working = false;
+        StateHasChanged();
+    }
+}

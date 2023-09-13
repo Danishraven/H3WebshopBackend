@@ -1,5 +1,6 @@
 ﻿using H3WebshopBackend.API.Interfaces;
 using H3WebshopBackend.Repository.Models;
+using H3WebshopBackend.Repository.Repositories;
 using H3WebshopBackend.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,11 @@ namespace H3WebshopBackend.API.Controllers
         public async Task<int> UpdateCustomer([FromBody] Customer Customer)
         {
             return await CustomerService.UpdateCustomer(Customer);
+        }
+        [HttpGet("email/{email}")]
+        public async Task<Customer[]> GetByEmail(string email)
+        {
+            return await CustomerService.GetByEmail(email);
         }
     }
 }

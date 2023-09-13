@@ -1,6 +1,7 @@
 ﻿using H3WebshopBackend.API.Controllers;
 using H3WebshopBackend.API.Interfaces;
 using H3WebshopBackend.Repository.Models;
+using H3WebshopBackend.Repository.Repositories;
 
 namespace H3WebshopBackend.Frontend.Services
 {
@@ -50,6 +51,11 @@ namespace H3WebshopBackend.Frontend.Services
         public async Task<int> UpdateCustomer(Customer Customer)
         {
             return await CustomerController.UpdateCustomer(Customer);
+        }
+
+        public async Task<Customer[]> GetByEmail(string email)
+        {
+            return await CustomerController.GetByEmail(email);
         }
     }
 }
