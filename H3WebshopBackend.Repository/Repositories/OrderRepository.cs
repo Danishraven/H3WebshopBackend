@@ -39,7 +39,7 @@ namespace H3WebshopBackend.Repository.Repositories
 
         public async Task<int> DeleteOrder(Guid id)
         {
-            var Order = await Context.Order.FindAsync(id);
+            var Order = Context.Order.Find(id);
             if(Order == null) return 0;
             Context.Order.Remove(Order);
             int changes = await Context.SaveChangesAsync();
